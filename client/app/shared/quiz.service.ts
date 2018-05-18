@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Participant } from '../shared/models/participant.model';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class QuizService {
@@ -9,11 +11,7 @@ export class QuizService {
 
    }
 
-  insertParticipant(name: string, email: string) {
-    const body = {
-      Name: name,
-      Email: email
-    };
-    return this.http.post(this.rootUrl + '/api/InsertParticipant', body);
+  insertParticipant(participant: Participant): Observable<Participant> {
+    return this.http.post<Participant>('/api/insertParticipant', participant);
   }
 }

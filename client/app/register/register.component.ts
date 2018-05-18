@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuizService } from '../shared/quiz.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -9,13 +10,25 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
-   emailPattern = '^[a-zA-Z0-9\\.!#%&\'*+\/=?^_`\\{|\\}~-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$';
-  constructor(private quizeService: QuizService, private route: Router) { }
+  addParticipantForm: FormGroup;
+
+
+  emailPattern = '^[a-zA-Z0-9\\.!#%&\'*+\/=?^_`\\{|\\}~-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$';
+
+  constructor(
+    private quizeService: QuizService,
+    private route: Router,
+    private formBuilder: FormBuilder
+  ) { }
 
   ngOnInit() {
+    this.addParticipantForm = this.formBuilder.group({
+      name: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required)
+    });
   }
   OnSubmit(name: string, email: string) {
-    this.quizeService.insertParticipant(name, email).subscribe(
+    this.quizeService.insertParticipant(this.addParticipantForm.value).subscribe(
       data => {
         console.log(data);
         // localStorage.clear();
