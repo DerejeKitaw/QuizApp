@@ -26,7 +26,7 @@ import { QuizService } from './shared/quiz.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
+    // FormsModule,
     HttpClientModule,
     ReactiveFormsModule
   ],
